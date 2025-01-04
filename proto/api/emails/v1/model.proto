@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package ingot.api.email.v1;
+import "google/protobuf/timestamp.proto";
+
+// Enum for user status
+enum EmailStatus {
+    VERIFIED = 0;  // Verified email
+    UNVERIFIED = 1; // Unverified email
+    BOUNCED = 2;  // Bounced email
+    SPAM = 3; // Spam email
+    BLOCKED = 4; // Blocked email
+}
+
+message Email {
+    string id = 1;
+    string email = 2;
+    EmailStatus status = 3;
+    bool is_primary = 4;
+    bool is_verified = 5;
+    google.protobuf.Timestamp created_at = 6;
+    google.protobuf.Timestamp updated_at = 7;
+}
+
+message EmailWithUser {
+    string id = 1;
+    string email = 2;
+    EmailStatus status = 3;
+    bool is_primary = 4;
+    bool is_verified = 5;
+    google.protobuf.Timestamp created_at = 6;
+    google.protobuf.Timestamp updated_at = 7;
+}

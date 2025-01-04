@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package ingot.api.users.v1;
+
+import "api/users/v1/model.proto";
+
+message GetUserByIdRequest {
+    string id = 1;
+}
+
+message CreateUserRequest {
+    string username = 1;
+    string password = 2;
+}
+
+message ListUserRequest {}
+
+// message ListUserResponse {
+//     repeated User users = 1;
+// }
+
+service Users {
+    // rpc GetUserById(GetUserByIdRequest) returns (User) {};
+    // rpc ListUsers(ListUsersRequest) returns (ListUsersResponse) {}
+    rpc CreateUser(CreateUserRequest) returns (User) {}
+}
+
+/*
+
+    username, password -> check -> tokens -> return
+    username -> request OTP Code -> Select The Contact Method -> send OTP Code -> verify OTP Code -> tokens -> return
+    user -> deactivate -> return
+
+*/

@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package ingot.api.users.v1;
+
+// Enum for user status
+enum UserStatus {
+    ACTIVE = 0;  // Active user
+    INACTIVE = 1; // Inactive user
+    BANNED = 2;  // Banned user
+    DELETED = 3; // Deleted user
+}
+
+message User {
+    string id = 1;
+    string username = 2;
+    UserStatus status = 3;
+    bool is_verified = 4;
+    bool onboarded = 6;
+}

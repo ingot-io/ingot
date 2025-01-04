@@ -1,0 +1,26 @@
+[package]
+name = "ingot"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tonic = "0.9"
+prost = "0.11"
+tokio = { version = "1.0", features = ["macros", "rt-multi-thread"] }
+diesel = { version = "2.2.0", features = ["postgres", "uuid", "serde_json"] }
+dotenvy = "0.15"
+pq-sys = { version = "0.6", features = ["bundled"] }
+openssl-sys = { version = "0.9.100", features = ["vendored"] }
+argon2 = "0.5.3"
+rand = "0.8.5"
+uuid = { version = "1.11", features = ["v4", "serde"] }
+diesel-derive-enum = { version = "2.1.0", features = ["postgres"] }
+diesel-async = {version = "0.5.2", features = ["postgres", "async-connection-wrapper"] }
+envconfig = "0.11.0"
+serde =  { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+regex = "1.11.1"
+
+
+[build-dependencies]
+tonic-build = "0.9"
