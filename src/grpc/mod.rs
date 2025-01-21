@@ -1,6 +1,8 @@
 pub mod users;
 pub mod device;
 pub mod auth;
+pub mod emails;
+pub mod phones;
 
 // pub mod auth {
 //     pub mod v1 {

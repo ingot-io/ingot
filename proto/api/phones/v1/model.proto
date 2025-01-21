@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package ingot.api.phones.v1;
+
+enum PhoneStatus {
+  PHONE_STATUS_UNVERIFIED = 0;
+  PHONE_STATUS_VERIFIED = 1;
+  PHONE_STATUS_BOUNCED = 2;
+}
+
+message Phone {
+  string phone_id = 1;
+  string user_id = 2;
+  string country_code = 3;
+  string number = 4;
+  string full_number = 5;  // Read-only (generated column)
+  string type = 6;
+  PhoneStatus status = 7;
+  bool is_primary = 10;
+  bool is_verified = 11;
+//   google.protobuf.Timestamp verified_at = 8;
+//   google.protobuf.Timestamp bounced_at = 9;
+//   google.protobuf.Struct metadata = 12;
+//   google.protobuf.Timestamp created_at = 13;
+//   google.protobuf.Timestamp updated_at = 14;
+}

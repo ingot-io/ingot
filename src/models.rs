@@ -1,9 +1,8 @@
 use diesel::{
-    ExpressionMethods, Insertable, PgConnection, QueryDsl, Queryable, RunQueryDsl, Selectable, SelectableHelper,
-    sql_types::Timestamptz
+    ExpressionMethods, Insertable, PgConnection, QueryDsl, Queryable, RunQueryDsl, Selectable, SelectableHelper
 };
 use uuid::Uuid;
-use crate::schema::{users, devices, sessions};
+use crate::schema::{users, emails, phones, devices, sessions};
 use serde_json::Value;
 use ipnet::IpNet;
 
@@ -327,5 +326,143 @@ impl Session {
             .filter(sessions::session_uuid.eq(session_uuid))
             .execute(conn)?;
         Ok(deleted > 0)
+    }
+}
+
+
+#[derive(Debug, PartialEq, Clone, Eq, diesel_derive_enum::DbEnum)]
+#[ExistingTypePath = "crate::schema::sql_types::EmailStatusEnum"]
+pub enum EmailStatusEnum {
+    Unverified,
+    Verified,
+    Bounced,
+    Disabled
+}
+
+#[derive(Queryable, Selectable, Clone)]
+#[diesel(table_name = emails)]
+#[diesel(check_for_backend(diesel::pg::Pg))]
+pub struct Email {
+    pub email_uuid: Uuid,
+    pub user_uuid: Uuid,
+    pub value: String,
+    pub status: EmailStatusEnum,
+    // pub verified_at: chrono::DateTime<chrono::Utc>,
+    // pub bounced_at: Option<chrono::DateTime<chrono::Utc>>,
+    pub is_primary: bool,
+    pub is_verified: bool,
+    pub metadata: Value,
+    // pub created_at: Option<chrono::DateTime<chrono::Utc>>,
+    // pub updated_at: Option<chrono::DateTime<chrono::Utc>>
+}
+
+#[derive(Insertable)]
+#[diesel(table_name = emails)]
+pub struct NewEmail {
+    pub user_uuid: Uuid,
+    pub value: String,
+    pub status: EmailStatusEnum,
+    pub metadata: Value,
+}
+
+impl Email {
+    pub fn create(
+        conn: &mut PgConnection,
+        new_email: NewEmail,
+    ) -> Result<Email, diesel::result::Error> {
+        diesel::insert_into(emails::table)
+            .values(new_email)
+            .returning(Email::as_returning())
+            .get_result(conn)
+    }
+
+    pub fn find_by_uuid(
+        conn: &mut PgConnection,
+        email_uuid: Uuid,
+    ) -> Result<Email, diesel::result::Error> {
+        emails::table
+            .filter(emails::email_uuid.eq(email_uuid))
+            .select(Email::as_select())
+            .first(conn)
+    }
+
+    pub fn find_by_value(
+        conn: &mut PgConnection,
+        email: String,
+    ) -> Result<Email, diesel::result::Error> {
+        emails::table
+            .filter(emails::value.eq(email))
+            .select(Email::as_select())
+            .first(conn)
+    }
+}
+
+#[derive(Debug, PartialEq, Clone, Eq, diesel_derive_enum::DbEnum)]
+#[ExistingTypePath = "crate::schema::sql_types::PhoneStatusEnum"]
+pub enum PhoneStatusEnum {
+    Unverified,
+    Verified,
+    Bounced,
+    Disabled
+}
+
+#[derive(Queryable, Selectable, Clone)]
+#[diesel(table_name = phones)]
+#[diesel(check_for_backend(diesel::pg::Pg))]
+pub struct Phone {
+    pub phone_uuid: Uuid,
+    pub user_uuid: Uuid,
+    pub country_code: String,
+    pub number: String,
+    pub full_number: Option<String>,
+    pub type_: Option<String>,
+    pub status: PhoneStatusEnum,
+    // pub verified_at: Option<chrono::DateTime<chrono::Utc>>,
+    // pub bounced_at: Option<chrono::DateTime<chrono::Utc>>,
+    pub is_primary: bool,
+    pub is_verified: bool,
+    pub metadata: Value,
+}
+
+#[derive(Insertable)]
+#[diesel(table_name = phones)]
+pub struct NewPhone {
+    pub user_uuid: Uuid,
+    pub country_code: String,
+    pub number: String,
+    pub type_: String,
+    pub status: PhoneStatusEnum,
+    pub metadata: Value,
+}
+
+impl Phone {
+    pub fn create(
+        conn: &mut PgConnection,
+        new_phone: NewPhone,
+    ) -> Result<Phone, diesel::result::Error> {
+        diesel::insert_into(phones::table)
+            .values(new_phone)
+            .returning(Phone::as_returning())
+            .get_result(conn)
+    }
+
+    pub fn find_by_uuid(
+        conn: &mut PgConnection,
+        phone_uuid: Uuid,
+    ) -> Result<Phone, diesel::result::Error> {
+        phones::table
+            .filter(phones::phone_uuid.eq(phone_uuid))
+            .select(Phone::as_select())
+            .first(conn)
+    }
+
+    pub fn find_by_number(
+        conn: &mut PgConnection,
+        full_number: String,
+    ) -> Result<Phone, diesel::result::Error> {
+        phones::table
+            .filter(phones::full_number.eq(full_number))
+            .select(Phone::as_select())
+            .first(conn)
     }
 }

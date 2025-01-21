@@ -16,6 +16,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         "devices/v1/devices",
         "auth/v1/model",
         "auth/v1/auth",
+        "emails/v1/model",
+        "emails/v1/emails",
+        "phones/v1/model",
+        "phones/v1/phones",
     ];
 
     let protos: Vec<_> = protos

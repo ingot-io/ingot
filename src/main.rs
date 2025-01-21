@@ -28,11 +28,15 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let users_service = grpc::users::service::UsersService::new(database.clone());
     let auth_service = grpc::auth::service::AuthService::new(database.clone());
     let device_service = grpc::device::service::DevicesService::new(database.clone());
+    let emails_service = grpc::emails::service::EmailsService::new(database.clone());
+    let phone_service = grpc::phones::service::PhonesService::new(database.clone());
 
     Server::builder()
     .add_service(grpc::users::v1::users_server::UsersServer::new(users_service))
     .add_service(grpc::auth::v1::auth_server::AuthServer::new(auth_service))
     .add_service(grpc::device::v1::devices_server::DevicesServer::new(device_service))
+    .add_service(grpc::emails::v1::emails_server::EmailsServer::new(emails_service))
+    .add_service(grpc::phones::v1::phones_server::PhonesServer::new(phone_service))
     .serve(addr)
     .await?;
 

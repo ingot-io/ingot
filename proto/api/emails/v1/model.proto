@@ -1,7 +1,7 @@
 syntax = "proto3";
 
-package ingot.api.email.v1;
-import "google/protobuf/timestamp.proto";
+package ingot.api.emails.v1;
+// import "google/protobuf/timestamp.proto";
 
 // Enum for user status
 enum EmailStatus {
@@ -18,8 +18,15 @@ message Email {
     EmailStatus status = 3;
     bool is_primary = 4;
     bool is_verified = 5;
-    google.protobuf.Timestamp created_at = 6;
-    google.protobuf.Timestamp updated_at = 7;
+    // google.protobuf.Timestamp created_at = 6;
+    // google.protobuf.Timestamp updated_at = 7;
+}
+
+
+message EmailResponse {
+    Email email = 1;
+    string message = 2;
+    bool success = 3;
 }
 
 message EmailWithUser {
@@ -28,6 +35,6 @@ message EmailWithUser {
     EmailStatus status = 3;
     bool is_primary = 4;
     bool is_verified = 5;
-    google.protobuf.Timestamp created_at = 6;
-    google.protobuf.Timestamp updated_at = 7;
+    // google.protobuf.Timestamp created_at = 6;
+    // google.protobuf.Timestamp updated_at = 7;
 }

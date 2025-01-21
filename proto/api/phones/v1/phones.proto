@@ -1,0 +1,79 @@
+syntax = "proto3";
+
+package ingot.api.phones.v1;
+
+import "api/phones/v1/model.proto";
+
+message CreatePhoneRequest {
+    string user_id = 1;
+    string country_code = 2;
+    string number = 3;
+    string type = 4;
+    // google.protobuf.Struct metadata = 5;
+  }
+  
+  message GetPhoneRequest {
+    oneof identifier {
+      string phone_id = 1;
+      string full_number = 2;
+    }
+  }
+  
+  message UpdatePhoneRequest {
+    string phone_id = 1;
+    optional string type = 2;
+    // optional google.protobuf.Struct metadata = 3;
+    optional PhoneStatus status = 4;
+  }
+  
+  message DeletePhoneRequest {
+    string phone_id = 1;
+  }
+  
+  message SetPrimaryPhoneRequest {
+    string user_id = 1;
+    string phone_id = 2;
+  }
+  
+  message VerifyPhoneRequest {
+    string phone_id = 1;
+    // google.protobuf.Timestamp verification_time = 2;
+  }
+  
+  message MarkPhoneAsBouncedRequest {
+    string phone_id = 1;
+    // google.protobuf.Timestamp bounce_time = 2;
+  }
+  
+  message ListPhonesByUserRequest {
+    string user_id = 1;
+    int32 page_size = 2;
+    string page_token = 3;
+  }
+  
+  message ListPhonesResponse {
+    repeated Phone phones = 1;
+    string next_page_token = 2;
+  }
+  
+  // Error Messages (could be in a separate file)
+  message ErrorResponse {
+    int32 code = 1;
+    string message = 2;
+    repeated string details = 3;
+}
+
+service Phones {
+    // Basic CRUD operations
+    rpc CreatePhone(CreatePhoneRequest) returns (Phone) {};
+    // rpc GetPhone(GetPhoneRequest) returns (Phone) {};
+    // rpc UpdatePhone(UpdatePhoneRequest) returns (Phone) {};
+    // rpc DeletePhone(DeletePhoneRequest) returns (google.protobuf.Empty) {};
+    
+    // Specialized operations
+    // rpc SetPrimaryPhone(SetPrimaryPhoneRequest) returns (Phone) {};
+    // rpc VerifyPhone(VerifyPhoneRequest) returns (Phone) {};
+    // rpc MarkPhoneAsBounced(MarkPhoneAsBouncedRequest) returns (Phone) {};
+    // rpc ListPhonesByUser(ListPhonesByUserRequest) returns (ListPhonesResponse) {};
+  }
+  

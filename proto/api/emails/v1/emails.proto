@@ -1,0 +1,77 @@
+syntax = "proto3";
+
+package ingot.api.emails.v1;
+
+import "api/emails/v1/model.proto";
+
+message CreateEmailRequest {
+    string user_id = 1;
+    string email = 2;
+}
+
+// message DeleteEmailRequest {
+//     string email = 1;
+// }
+
+// message GetEmailRequest {
+//     string email = 1;
+// }
+
+// message IsEmailVerifiedRequest {
+//     string email = 1;
+// }
+
+// message UpdateEmailRequest {
+//     string email = 1;
+//     bool is_primary = 3;
+//     PhoneStatus status = 2;
+// }
+
+// message VerifyEmailRequest {
+//     string email = 1;
+// }
+
+// message VerifyEmailResponse {
+//     string email = 1;
+//     bool is_verified = 2;
+// }
+
+// message GenerateEmailVerificationTokenRequest {
+//     string email = 1;
+// }
+
+// message VerifyEmailTokenRequest {
+//     string email = 1;
+//     string token = 2;
+// }
+
+// message UpdateEmailResponse {
+//     string email = 1;
+//     bool is_primary = 3;
+//     PhoneStatus status = 2;
+// }
+
+// message ListUserEmailsResponse {
+//     repeated Email emails = 1;
+// }
+
+// message ListUserEmailsRequest {
+//     string user_id = 1;
+// }
+
+// message TokenResponse {
+//     string value = 1;      // The generated token
+//     string expiration = 2; // Token expiration time in ISO 8601 format (e.g., "2025-01-03T15:04:05Z")
+// }
+
+service Emails {
+    rpc CreateEmail(CreateEmailRequest) returns (EmailResponse) {}
+    // rpc DeleteEmail(DeleteEmailRequest) returns (Email) {}
+    // rpc GetEmail(GetEmailRequest) returns (Email) {}
+    // rpc IsEmailVerified(IsEmailVerifiedRequest) returns (Email) {}
+    // rpc UpdateEmail(UpdateEmailRequest) returns (UpdateEmailResponse) {}
+    // rpc VerifyEmail(VerifyEmailRequest) returns (VerifyEmailResponse) {}
+    // rpc GenerateEmailVerificationToken(GenerateEmailVerificationTokenRequest) returns (TokenResponse) {}
+    // rpc VerifyEmailToken(VerifyEmailTokenRequest) returns (Email) {}
+    // rpc ListUserEmails(ListUserEmailsRequest) returns (ListUserEmailsResponse) {}
+}
