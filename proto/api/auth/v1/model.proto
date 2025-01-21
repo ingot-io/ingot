@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package ingot.api.auth.v1;
+
+// TokenAlgorithm defines the algorithm used for token signing and verification.
+enum TokenAlgorithm {
+    ALGORITHM_UNSPECIFIED = 0; // Default, unspecified algorithm
+    HS256 = 1; // HMAC with SHA-256
+    HS512 = 2; // HMAC with SHA-512
+    RS256 = 3; // RSA with SHA-256
+    ES256 = 4; // ECDSA with SHA-256
+}  
+
+// Token represents a generic token structure.
+message Token {
+    string value = 1; // The actual token string (e.g., JWT)
+    TokenAlgorithm algorithm = 2; // Algorithm used for signing the token
+    int64 issued_at = 3; // Timestamp when the token was issued (Unix epoch time)
+    int64 expires_at = 4; // Timestamp when the token expires (Unix epoch time)
+    string scope = 5; // Optional: Scopes associated with the token (e.g., "read write")
+    map<string, string> metadata = 7; // Additional metadata (e.g., user roles, issuer)
+}
+
+// AccessToken represents an access token with user-specific claims.
+message AccessToken {
+    Token token = 1; // Base token fields
+    string user_id = 2; // ID of the user associated with the token
+    repeated string roles = 3; // Roles associated with the user (e.g., "admin", "user")
+    string issuer = 4; // Issuer of the token (e.g., "auth-service")
+    string audience = 5; // Intended audience for the token (e.g., "api-service")
+    string jwt_id = 6; // JWT ID: A unique identifier for the token
+}
+
+// RefreshToken represents a refresh token used to obtain new access tokens.
+message RefreshToken {
+    Token token = 1; // Base token fields
+    string user_id = 2; // ID of the user associated with the token
+    string issuer = 3; // Issuer of the token (e.g., "auth-service")
+    string session_id = 4; // Unique identifier for the user's session
+}
+  

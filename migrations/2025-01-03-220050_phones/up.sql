@@ -17,14 +17,14 @@ CREATE TABLE phones (
     metadata JSONB NOT NULL DEFAULT '{}'::JSONB,
 
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     
-    CONSTRAINT phone_unique_per_user UNIQUE (user_uuid, full_number),  -- Ensure unique phone numbers per user
+    CONSTRAINT phone_unique_per_user UNIQUE (user_uuid, full_number)  -- Ensure unique phone numbers per user
 );
 
 -- Create a unique index on the email value
 CREATE UNIQUE INDEX phones_value_idx ON phones(full_number);
 
--- Create a unique index on the user_uuid and is_primary columns
+-- -- Create a unique index on the user_uuid and is_primary columns
 CREATE UNIQUE INDEX phones_user_uuid_is_primary_idx ON phones(user_uuid, is_primary);
 

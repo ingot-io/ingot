@@ -9,14 +9,12 @@ CREATE TABLE devices (
     location JSONB,  -- JSON field to store location details (e.g., country, city, latitude, longitude)
     status device_status_enum NOT NULL DEFAULT 'active',  -- Device status (active, inactive, etc.)
     last_used_at TIMESTAMP WITH TIME ZONE,  -- Timestamp when the device was last used
-    registered_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,  -- When the device was first registered
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,  -- When the record was created
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,  -- When the record was last updated
-    is_current_device BOOLEAN DEFAULT FALSE,  -- Indicates whether this is the current device
     mac_address VARCHAR(17), -- MAC address of the device (for network-related tracking)
     notification_token TEXT,                  -- Token for push notifications
-    notification_enabled BOOLEAN DEFAULT TRUE; -- Whether notifications are enabled
-    metadata JSONB NOT NULL DEFAULT '{}'::JSONB,  -- Additional metadata stored as JSON
+    notification_enabled BOOLEAN DEFAULT TRUE, -- Whether notifications are enabled
+    metadata JSONB NOT NULL DEFAULT '{}'::JSONB  -- Additional metadata stored as JSON
 );
 
 CREATE INDEX idx_devices_device_type ON devices(device_type);

@@ -6,6 +6,12 @@ DROP TYPE user_status_enum;
 DROP TYPE email_status_enum;
 DROP TYPE phone_status_enum;
 DROP TYPE device_type_enum;
+DROP TYPE os_enum;
+DROP TYPE device_status_enum;
+DROP TYPE membership_status_enum;
+DROP TYPE membership_invitation_status_enum;
+
+
 
 DROP FUNCTION IF EXISTS diesel_manage_updated_at(_tbl regclass);
 DROP FUNCTION IF EXISTS diesel_set_updated_at();

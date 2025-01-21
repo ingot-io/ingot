@@ -2,28 +2,142 @@ syntax = "proto3";
 
 package ingot.api.users.v1;
 
+import "google/protobuf/empty.proto";
+import "google/api/annotations.proto"; // For HTTP annotations
 import "api/users/v1/model.proto";
 
+// GetUserByIdRequest is used to fetch a user by their unique identifier.
 message GetUserByIdRequest {
-    string id = 1;
+    string id = 1; // The unique identifier of the user.
 }
 
+// GetUserByUsernameRequest is used to fetch a user by their username.
+message GetUserByUsernameRequest {
+    string username = 1; // The username of the user.
+}
+
+// CreateUserRequest is used to create a new user.
 message CreateUserRequest {
-    string username = 1;
-    string password = 2;
+    string username = 1; // The desired username for the new user.
+    string password = 2; // The password for the new user.
+    string email = 3;    // The email address of the user.
+    string first_name = 4; // The first name of the user.
+    string last_name = 5;  // The last name of the user.
 }
 
-message ListUserRequest {}
+// CheckPasswordRequest is used to verify if a provided password matches the user's stored password.
+message CheckPasswordRequest {
+    string id = 1; // The unique identifier of the user.
+    string password = 2; // The password to check.
+}
 
-// message ListUserResponse {
-//     repeated User users = 1;
+// CheckPasswordResponse contains the result of the password check.
+message CheckPasswordResponse {
+    bool valid = 1; // Indicates whether the provided password is valid.
+}
+
+// DeleteUserRequest is used to delete a user by their unique identifier.
+message DeleteUserRequest {
+    string id = 1; // The unique identifier of the user to delete.
+}
+
+// ChangePasswordRequest is used to update a user's password.
+message ChangePasswordRequest {
+    string id = 1; // The unique identifier of the user.
+    string current_password = 2; // The user's current password.
+    string new_password = 3; // The new password to set.
+}
+
+// UpdateUserRequest is used to update user details.
+message UpdateUserRequest {
+    string id = 1; // The unique identifier of the user.
+    string username = 2; // The new username (optional).
+}
+
+// ListUsersRequest is used to paginate through users.
+message ListUsersRequest {
+    int32 page_size = 1; // The number of users to return in a single page.
+    string page_token = 2; // The token of the page to return.
+}
+
+// ListUsersResponse contains a paginated list of users.
+message ListUsersResponse {
+    repeated UserResponse users = 1; // The list of users.
+    string next_page_token = 2; // The token to retrieve the next page of users.
+}
+
+// Users service provides methods for managing users.
+service Users {
+    // CreateUser creates a new user.
+    rpc CreateUser(CreateUserRequest) returns (UserResponse) {
+        option (google.api.http) = {
+            post: "/v1/users"
+            body: "*"
+        };
+    }
+
+    // CheckUserPassword verifies if the provided password matches the user's stored password.
+    rpc CheckUserPassword(CheckPasswordRequest) returns (CheckPasswordResponse) {
+        option (google.api.http) = {
+            post: "/v1/users/check-password"
+            body: "*"
+        };
+    }
+
+    // GetUserById retrieves a user by their unique identifier.
+    rpc GetUserById(GetUserByIdRequest) returns (UserResponse) {
+        option (google.api.http) = {
+            get: "/v1/users/{id}"
+        };
+    }
+
+    // GetUserByUsername retrieves a user by their username.
+    rpc GetUserByUsername(GetUserByUsernameRequest) returns (UserResponse) {
+        option (google.api.http) = {
+            get: "/v1/users/username/{username}"
+        };
+    }
+
+    // DeleteUser deletes a user by their unique identifier.
+    rpc DeleteUser(DeleteUserRequest) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            delete: "/v1/users/{id}"
+        };
+    }
+
+    // ChangePassword updates a user's password after verifying their current password.
+    rpc ChangePassword(ChangePasswordRequest) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            post: "/v1/users/{id}/change-password"
+            body: "*"
+        };
+    }
+
+    // UpdateUser updates user details.
+    rpc UpdateUser(UpdateUserRequest) returns (UserResponse) {
+        option (google.api.http) = {
+            patch: "/v1/users/{id}"
+            body: "*"
+        };
+    }
+}
+
+// message CheckUserMFARequest {
+//     string id = 1; // The unique identifier of the user.
+//     string code = 2; // The code provided by the authenticator (e.g., TOTP code).
 // }
 
-service Users {
-    // rpc GetUserById(GetUserByIdRequest) returns (User) {};
-    // rpc ListUsers(ListUsersRequest) returns (ListUsersResponse) {}
-    rpc CreateUser(CreateUserRequest) returns (User) {}
-}
+// message CheckUserMFAResponse {
+//     bool valid = 1; // True if the authenticator code is valid, false otherwise.
+// }
+
+// CheckUserMFA verifies the provided multi-factor authentication code for a user.
+// rpc CheckUserMFA(CheckUserMFARequest) returns (CheckUserMFAResponse) {
+//     option (google.api.http) = {
+//         post: "/v1/users/{id}/verify-mfa"
+//         body: "*"
+//     };
+// }
 
 /*
 

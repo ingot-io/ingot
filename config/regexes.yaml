@@ -1,0 +1,17 @@
+user_agent_parsers:
+  - regex: '(Chrome)/(\d+)\.(\d+)\.(\d+)\.(\d+)'
+    family_replacement: 'Chrome'
+    v1_replacement: '$2'
+    v2_replacement: '$3'
+    v3_replacement: '$4'
+    v4_replacement: '$5'
+
+os_parsers:
+  - regex: 'Windows NT (\d+)\.(\d+)'
+    os_replacement: 'Windows'
+    os_v1_replacement: '$1'
+    os_v2_replacement: '$2'
+
+device_parsers:
+  - regex: '(iPhone|iPad|iPod)'
+    device_replacement: 'Apple Mobile Device'

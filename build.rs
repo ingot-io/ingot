@@ -1,8 +1,6 @@
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let proto_root = "proto/api";
     let protos = vec![
-        // "auth",
-        // "device",
         // "hooks",
         // "idp",
         // "oidc",
@@ -14,6 +12,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         // "sessions",
         "users/v1/model",
         "users/v1/user",
+        "devices/v1/model",
+        "devices/v1/devices",
+        "auth/v1/model",
+        "auth/v1/auth",
     ];
 
     let protos: Vec<_> = protos
@@ -23,7 +25,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     tonic_build::configure()
     .build_server(true)
-    .compile(&protos, &["proto"])?;
+    .compile(&protos, &["proto", "googleapis"])?;
 
      //::compile_protos("proto/api/user/v1/user.proto")?; //api/users/v1/
     Ok(())

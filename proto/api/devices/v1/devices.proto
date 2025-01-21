@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+package ingot.api.devices.v1;
+
+import "api/devices/v1/model.proto";
+
+message CreateDeviceRequest {
+    string ip = 1;
+    string user_agent = 2;
+    optional string mac_address = 3;
+    map<string, string> location = 4;
+}
+
+service Devices {
+    rpc CreateDevice(CreateDeviceRequest) returns (DeviceResponse);
+    // rpc GetDevice(GetDeviceRequest) returns (GetDeviceResponse);
+    // rpc UpdateDevice(UpdateDeviceRequest) returns (UpdateDeviceResponse);
+    // rpc DeleteDevice(DeleteDeviceRequest) returns (DeleteDeviceResponse);
+    // rpc ListDevices(ListDevicesRequest) returns (ListDevicesResponse);
+}
+
+
+// message CreateDeviceResponse {
+//     ingot.api.devices.v1.Device device = 1;
+// }
+
+// message GetDeviceRequest {
+//     string id = 1;
+// }
+
+// message GetDeviceResponse {
+//     ingot.api.devices.v1.Device device = 1;
+// }
+
+// message UpdateDeviceRequest {
+//     ingot.api.devices.v1.Device device = 1;
+// }
+
+// message UpdateDeviceResponse {
+//     ingot.api.devices.v1.Device device = 1;
+// }
+
+// message DeleteDeviceRequest {
+//     string id = 1;
+// }
+
+// message DeleteDeviceResponse {}
+
+// message ListDevicesRequest {
+//     int32 page_size = 1;
+//     string page_token = 2;
+// }
+
+// message ListDevicesResponse {
+//     repeated ingot.api.devices.v1.Device devices = 1;
+//     string next_page_token = 2;
+// }

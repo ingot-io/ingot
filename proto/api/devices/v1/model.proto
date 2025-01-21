@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+package ingot.api.devices.v1;
+
+enum DeviceType {
+    DEVICE_TYPE_UNSPECIFIED = 0;
+    DEVICE_TYPE_DESKTOP = 1;
+    DEVICE_TYPE_MOBILE = 2;
+    DEVICE_TYPE_TABLET = 3;
+    DEVICE_TYPE_IOT = 4;
+}
+
+enum OS {
+    OS_UNSPECIFIED = 0;
+    OS_WINDOWS = 1;
+    OS_MACOS = 2;
+    OS_ANDROID = 3;
+    OS_IOS = 4;
+}
+
+enum DeviceStatus {
+    DEVICE_STATUS_UNSPECIFIED = 0;
+    DEVICE_STATUS_ACTIVE = 1;
+    DEVICE_STATUS_INACTIVE = 2;
+}
+
+message Device {
+    string id = 1;
+    DeviceType device_type = 2;
+    OS os = 3;
+    string os_version = 4;
+    string browser = 5;
+    string browser_version = 6;
+    string ip_address = 7;
+    map<string, string> location = 8;
+    DeviceStatus status = 9;
+    // string last_used_at = 10;
+    // string created_at = 11;
+    // string updated_at = 12;
+    string mac_address = 13;
+    string notification_token = 14;
+    bool notification_enabled = 15;
+    map<string, string> metadata = 16;
+}
+
+message DeviceResponse {
+    bool success = 1;
+    Device device = 2;
+}

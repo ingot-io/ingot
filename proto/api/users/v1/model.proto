@@ -17,3 +17,11 @@ message User {
     bool is_verified = 4;
     bool onboarded = 6;
 }
+
+message UserResponse {
+    string id = 1;
+    string username = 2;
+    UserStatus status = 3;
+    bool is_verified = 4;
+    bool onboarded = 6;
+}

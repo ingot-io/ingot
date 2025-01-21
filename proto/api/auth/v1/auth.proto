@@ -1,0 +1,98 @@
+syntax = "proto3";
+
+package ingot.api.auth.v1;
+
+import "api/users/v1/model.proto";
+import "api/auth/v1/model.proto";
+
+
+message UsernameLoginRequest {
+    string username = 1;
+    string password = 2;
+    string device_id = 3;
+    string ip = 4;
+}
+
+// The response message containing the authentication tokens.
+message LoginResponse {
+    bool success = 1;
+    AccessToken access_token = 2;
+    RefreshToken refresh_token = 3;
+    string message = 5;
+}
+
+// The request message containing the token to be validated.
+message ValidateTokenRequest {
+    string access_token = 1;
+}
+
+// The request message containing the refresh token.
+message RefreshTokenRequest {
+    string refresh_token = 1;
+}
+
+// The response message containing the new access token.
+message RefreshTokenResponse {
+    bool success = 1;
+    AccessToken access_token = 2;
+    string message = 3;
+}
+
+// The request message for logging out a user.
+message LogoutRequest {
+    string user_id = 1;
+  }
+  
+  // The response message containing the result of the logout operation.
+message LogoutResponse {
+    bool success = 1;
+    string message = 2;
+}
+
+// The request message for introspecting a token.
+message IntrospectTokenRequest {
+    string token = 1; // The token to introspect
+  }
+  
+  // The response message containing the token metadata.
+  message IntrospectTokenResponse {
+    bool active = 1; // Whether the token is active
+    int64 expires_at = 4; // Expiration timestamp (Unix epoch time)
+    string issuer = 6; // Issuer of the token
+    string audience = 7; // Intended audience for the token
+}
+
+  // The request message for revoking a token.
+message RevokeTokenRequest {
+    string token = 1; // The token to revoke
+  }
+  
+// The response message containing the result of the token revocation.
+message RevokeTokenResponse {
+    bool success = 1;
+    string message = 2;
+}
+
+// The response message containing the result of the token validation.
+message ValidateTokenResponse {
+    bool valid = 1;
+    string message = 2;
+    // User user = 3; // Returns the user associated with the token
+    // repeated Role roles = 4; // Returns the roles associated with the user
+}
+
+// The response message containing the result of the token revocation.
+message AccessTokenTokenRequest {
+    string value = 1;
+}
+
+// Session session = 4; // Returns the created session
+
+service Auth {
+    // rpc EmailLogin(EmailLoginRequest) returns (LoginResponse) {};
+    // rpc PhoneLogin(PhoneLoginRequest) returns (LoginResponse) {};
+    // rpc GenerateAccessToken(RefreshToken)
+
+    rpc UsernameLogin(UsernameLoginRequest) returns (LoginResponse) {};
+    rpc GetUserToken(AccessTokenTokenRequest) returns (ingot.api.users.v1.UserResponse) {}; // Add Session
+}

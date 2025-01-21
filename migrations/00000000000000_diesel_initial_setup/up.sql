@@ -65,6 +65,38 @@ CREATE TYPE os_enum AS ENUM (
     'other'           -- Any unrecognized or unspecified OS
 );
 
+CREATE TYPE device_status_enum AS ENUM (
+    'active',        -- Device is currently active and in use
+    'inactive',      -- Device is not in use but still registered
+    'suspended',     -- Device is temporarily suspended (e.g., due to security concerns)
+    'banned',        -- Device is banned and no longer allowed to access the system
+    'pending',       -- Device is pending approval or activation
+    'retired',       -- Device is retired and no longer in use
+    'lost',          -- Device is reported as lost
+    'stolen',        -- Device is reported as stolen
+    'maintenance',   -- Device is under maintenance
+    'offline'        -- Device is offline (e.g., not connected to the network)
+);
+
+CREATE TYPE membership_status_enum AS ENUM (
+    'active',        -- Membership is active and the user has full access
+    'inactive',      -- Membership is inactive (e.g., user is no longer participating)
+    'suspended',     -- Membership is temporarily suspended (e.g., due to policy violations)
+    'pending',       -- Membership is pending approval or activation
+    'expired',       -- Membership has expired (e.g., after a set duration)
+    'revoked',       -- Membership has been revoked by the organization
+    'left',          -- User has voluntarily left the organization
+    'banned'         -- User is banned from the organization
+);
+
+CREATE TYPE membership_invitation_status_enum AS ENUM (
+    'pending',       -- Invitation has been sent but not yet accepted or rejected
+    'accepted',      -- Invitation has been accepted by the user
+    'rejected',      -- Invitation has been rejected by the user
+    'expired',       -- Invitation has expired (e.g., after a set time period)
+    'revoked'        -- Invitation has been revoked by the organization
+);
+
 -- Sets up a trigger for the given table to automatically set a column called
 -- `updated_at` whenever the row is modified (unless `updated_at` was included
 -- in the modified columns)

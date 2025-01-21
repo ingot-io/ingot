@@ -1,0 +1,23 @@
+{
+    "success": true,
+    "issuer": "example-issuer",
+    "audience": "api-service",
+    "user": {
+        "user_id": "ecaf49ed-a79e-4cc6-80a3-135297c3059c"
+    },
+    "access_token": {
+        "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJleGFtcGxlLWlzc3VlciIsInN1YiI6ImVjYWY0OWVkLWE3OWUtNGNjNi04MGEzLTEzNTI5N2MzMDU5YyIsImlhdCI6MTczNzI4MjU0MSwiZXhwIjoxNzM3Mjg2MTQxfQ.2vm8zcBb0dEM0_m31mNEgBGC3KjT9hlbE6KWNH-BJxI",
+        "algorithm": "ALGORITHM_UNSPECIFIED",
+        "issued_at": "1737282541",
+        "expires_at": "1737286141"
+    },
+    "refresh_token": {
+        "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJleGFtcGxlLWlzc3VlciIsInN1YiI6ImVjYWY0OWVkLWE3OWUtNGNjNi04MGEzLTEzNTI5N2MzMDU5YyIsImlhdCI6MTczNzI4MjU0MSwiZXhwIjoxNzM5ODc0NTQxfQ.0KCYDMumdEIHdKrU2-mCsmVy2bUXp5eic2MmYB8jlgg",
+        "algorithm": "ALGORITHM_UNSPECIFIED",
+        "issued_at": "1737282541",
+        "expires_at": "1739874541"
+    },
+    "metadata": {
+        
+    }
+}

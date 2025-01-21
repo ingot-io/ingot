@@ -1,7 +1,7 @@
 {
     "protoc": {
         "options": [
-            "--proto_path=proto" // Add your root proto directory
+            "--proto_path=proto"
         ]
     },
     "rust-analyzer.cargo.buildScripts.enable": true
